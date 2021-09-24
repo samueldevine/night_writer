@@ -14,10 +14,22 @@ char_count = input_file.sum do |line|
 end
 
 translator = Translator.new('./data/dictionary.csv')
-output_array = translator.translate(input_string)
+output_array = translator.translate(input_string) # => [array of [arrays for each char]]
 
-File.open(ARGV[1], "w") { |file| file.puts "#{output_array[0][0]}" }
-File.open(ARGV[1], "a") { |file| file.puts "#{output_array[0][1]}" }
-File.open(ARGV[1], "a") { |file| file.puts "#{output_array[0][2]}" }
+line1 = output_array.map do |char_array|
+  "#{char_array[0]}" + "#{char_array[3]}" # => ['.0', '.0', '..']
+end
+
+line2 = output_array.map do |char_array|
+  "#{char_array[1]}" + "#{char_array[4]}" # => ['00', '.0', '00']
+end
+
+line3 = output_array.map do |char_array|
+  "#{char_array[2]}" + "#{char_array[5]}" # => ['00', '00', '00']
+end
+
+File.open(ARGV[1], "w") { |file| file.puts "#{line1}" }
+File.open(ARGV[1], "a") { |file| file.puts "#{line2}" }
+File.open(ARGV[1], "a") { |file| file.puts "#{line3}" }
 
 puts "Created '#{ARGV[1]}' containing #{char_count} characters."
