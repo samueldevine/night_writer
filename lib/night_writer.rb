@@ -18,15 +18,15 @@ output_array = translator.translate(input_string) # => [array of [arrays for eac
 
 line1 = output_array.map do |char_array|
   "#{char_array[0]}" + "#{char_array[3]}" # => ['.0', '.0', '..']
-end
+end.join('')
 
 line2 = output_array.map do |char_array|
   "#{char_array[1]}" + "#{char_array[4]}" # => ['00', '.0', '00']
-end
+end.join('')
 
 line3 = output_array.map do |char_array|
   "#{char_array[2]}" + "#{char_array[5]}" # => ['00', '00', '00']
-end
+end.join('')
 
 File.open(ARGV[1], "w") { |file| file.puts "#{line1}" }
 File.open(ARGV[1], "a") { |file| file.puts "#{line2}" }
