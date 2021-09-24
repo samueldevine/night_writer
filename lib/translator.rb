@@ -13,22 +13,22 @@ class Translator
   attr_reader :cells
 
   def initialize(path)
-    @cells = generate(path) # => array of Lines
+    @cells = generate(path)
   end
 
   def generate(path)
     read_csv(path).map do |row|
-      Dot.new(row) # => hash containing letters (keys) and raised dots (values)
+      Dot.new(row)
     end
   end
 
   def translate(string)
-    chars = string.chars # => ['a', 'b', 'c']
+    chars = string.chars
 
     chars.map do |char|
       @cells.map do |dot|
         dot.data[char]
-      end # => for a: ['.', '0', '0', '0', '0', '0',]
-    end # => [[a cell data], [b cell data], [c cell data]]
+      end
+    end
   end
 end

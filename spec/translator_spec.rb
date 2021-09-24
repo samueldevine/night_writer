@@ -11,16 +11,16 @@ RSpec.describe Translator do
   end
 
   it 'generates a dictionary' do
-    expect(@translator.dictionary).to be_an Array
-    expect(@translator.dictionary.first).to be_a Line
+    expect(@translator.cells).to be_an Array
+    expect(@translator.cells.first).to be_a Dot
   end
 
   it '#translate outputs an array of braille strings' do
     braille_a = @translator.translate('a')
 
     expect(braille_a).to be_an Array
-    expect(braille_a[0].length).to eq 3
-    expect(braille_a[0]).to eq ['.0', '00', '00']
+    expect(braille_a[0].length).to eq 6
+    expect(braille_a[0]).to eq ['.', '0', '0', '0', '0', '0',]
   end
 
   it '#translate can translate multiple chars' do
@@ -28,8 +28,8 @@ RSpec.describe Translator do
 
     expect(braille_abc).to be_an Array
     expect(braille_abc.length).to eq 3
-    expect(braille_abc[0][0]).to eq '.0'
-    expect(braille_abc[3][0]).to eq '.0'
-    expect(braille_abc[6][0]).to eq '..'
+    expect(braille_abc[0][0]).to eq '.'
+    expect(braille_abc[1][0]).to eq '.'
+    expect(braille_abc[2][0]).to eq '.'
   end
 end
