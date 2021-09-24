@@ -4,8 +4,13 @@
 # files to braile, using 0 to represent empty spaces and . to represent raised
 # dots in each block.
 
-char_count = File.open(ARGV[0]).sum do |line|
+input_file = File.open(ARGV[0], "r")
+input_string = File.open(ARGV[0], "r") { |file| file.read }
+
+char_count = input_file.sum do |line|
   line.chars.count
 end
+
+File.open(ARGV[1], "w") { |file| file.puts "#{input_string}" }
 
 puts "Created '#{ARGV[1]}' containing #{char_count} characters."
