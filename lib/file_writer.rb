@@ -2,7 +2,7 @@ class FileWriter
 
   def initialize(input_file, output_file)
     @input_file   = File.open(input_file, "r")
-    @input_string = File.read(input_file)
+    @input_string = File.read(input_file).downcase
     @translator   = Translator.new('./data/dictionary.csv')
     @output_file  = output_file
   end
