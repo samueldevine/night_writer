@@ -14,22 +14,28 @@ char_count = input_file.sum do |line|
 end
 
 translator = Translator.new('./data/dictionary.csv')
-output_array = translator.translate(input_string) # => [array of [arrays for each char]]
+File.open(ARGV[1], "w") { |file| file.puts "" }
 
-line1 = output_array.map do |char_array|
-  "#{char_array[0]}" + "#{char_array[3]}" # => ['.0', '.0', '..']
-end.join('')
+until input_string.length <= 0
+  output_array = translator.translate(input_string[0..39]) # => [array of [arrays for each char]]
 
-line2 = output_array.map do |char_array|
-  "#{char_array[1]}" + "#{char_array[4]}" # => ['00', '.0', '00']
-end.join('')
+  line1 = output_array.map do |char_array|
+    "#{char_array[0]}" + "#{char_array[3]}"
+  end.join('')
 
-line3 = output_array.map do |char_array|
-  "#{char_array[2]}" + "#{char_array[5]}" # => ['00', '00', '00']
-end.join('')
+  line2 = output_array.map do |char_array|
+    "#{char_array[1]}" + "#{char_array[4]}"
+  end.join('')
 
-File.open(ARGV[1], "w") { |file| file.puts "#{line1}" }
-File.open(ARGV[1], "a") { |file| file.puts "#{line2}" }
-File.open(ARGV[1], "a") { |file| file.puts "#{line3}" }
+  line3 = output_array.map do |char_array|
+    "#{char_array[2]}" + "#{char_array[5]}"
+  end.join('')
+
+  File.open(ARGV[1], "a") { |file| file.puts "#{line1}" }
+  File.open(ARGV[1], "a") { |file| file.puts "#{line2}" }
+  File.open(ARGV[1], "a") { |file| file.puts "#{line3}" }
+
+  input_string.slice!(0..39)
+end
 
 puts "Created '#{ARGV[1]}' containing #{char_count} characters."
