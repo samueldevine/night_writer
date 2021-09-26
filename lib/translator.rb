@@ -14,8 +14,8 @@ class Translator
               :cells
 
   def initialize(path)
-    @dots = generate_dots(path)
-    @cells = generate_cells
+    @dots   = generate_dots(path)
+    @cells  = generate_cells
   end
 
   def generate_dots(path)
@@ -29,7 +29,7 @@ class Translator
     ('a'..'z').each do |letter|
       @cells[letter] = find_cell_by_alpha_char(letter)
     end
-    # @cells[' '] = find_cell_by_alpha_char(' ')
+    @cells[' '] = find_cell_by_alpha_char(' ')
     @cells
   end
 
@@ -64,12 +64,16 @@ class Translator
     chars = {}
     i = 0
 
-    until char_lines[0].length == 0
-      chars[i] = [char_lines[0][0], char_lines[1][0], char_lines[2][0], char_lines[0][1], char_lines[1][1], char_lines[2][1]]
-      2.times { char_lines[0].shift }
-      2.times { char_lines[1].shift }
-      2.times { char_lines[2].shift }
-      i += 1
+    (lines.length / 3).times do
+      until char_lines[0].length == 0
+        chars[i] = [char_lines[0][0], char_lines[1][0], char_lines[2][0], char_lines[0][1], char_lines[1][1], char_lines[2][1]]
+        2.times { char_lines[0].shift }
+        2.times { char_lines[1].shift }
+        2.times { char_lines[2].shift }
+        i += 1
+      end
+
+      3.times { char_lines.shift }
     end
 
     chars.values.map do |dots|

@@ -31,8 +31,8 @@ class FileWriter
 
   def braille_character_count(file)
     file.sum do |line|
-      line.chars.count / 2
-    end
+      ((line.chars.count - 1.0) / 6)
+    end.to_i
   end
 
   def alpha_lines
