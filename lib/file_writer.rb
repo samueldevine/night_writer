@@ -28,4 +28,25 @@ class FileWriter
     char_count = alpha_character_count(@input_file)
     puts "Created '#{@output_file}' containing #{char_count} characters."
   end
+
+  def braille_character_count(file)
+    file.sum do |line|
+      line.chars.count / 2
+    end
+  end
+
+  def alpha_lines
+    @translator.translate_to_alpha(@input_string)
+  end
+
+  def write_alpha_file
+    File.open(@output_file, "w") {}
+
+    (alpha_lines.length).times do |i|
+      File.open(@output_file, "a") { |file| file.puts "#{alpha_lines[i]}" }
+    end
+
+    char_count = braille_character_count(@input_file)
+    puts "Created '#{@output_file}' containing #{char_count} characters."
+  end
 end
