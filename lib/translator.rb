@@ -14,8 +14,8 @@ class Translator
               :cells
 
   def initialize(path)
-    @dots   = generate_dots(path)
-    @cells  = generate_cells
+    @dots   ||= generate_dots(path)
+    @cells  ||= generate_cells
   end
 
   def generate_dots(path)
@@ -52,7 +52,7 @@ class Translator
       @dots.map do |dot|
         dot.data[char]
       end
-    end
+    end # => ['0', '.', '.', '.', '.', '.']
   end
 
   def get_alpha_chars(string)
