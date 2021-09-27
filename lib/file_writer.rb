@@ -7,25 +7,47 @@ class FileWriter
     @output_file  = output_file
   end
 
-  def character_count(file)
+  def alpha_character_count(file)
     file.sum do |line|
       line.chars.count
-    end
+    end - 1
+    # don't count final "\n" character
   end
 
-  def lines_arr
+  def braille_lines
     @translator.translate_to_braille(@input_string)
   end
 
-  def write_file
+  def write_braille_file
     File.open(@output_file, "w") {}
     # overwrites any data that may already be in the file
 
-    (lines_arr.length).times do |i|
-      File.open(@output_file, "a") { |file| file.puts "#{lines_arr[i]}" }
+    (braille_lines.length).times do |i|
+      File.open(@output_file, "a") { |file| file.puts "#{braille_lines[i]}" }
     end
 
-    char_count = character_count(@input_file)
+    char_count = alpha_character_count(@input_file)
+    puts "Created '#{@output_file}' containing #{char_count} characters."
+  end
+
+  def braille_character_count(file)
+    file.sum do |line|
+      ((line.chars.count - 1.0) / 6)
+    end.to_i
+  end
+
+  def alpha_lines
+    @translator.translate_to_alpha(@input_string)
+  end
+
+  def write_alpha_file
+    File.open(@output_file, "w") {}
+
+    (alpha_lines.length).times do |i|
+      File.open(@output_file, "a") { |file| file.puts "#{alpha_lines[i]}" }
+    end
+
+    char_count = braille_character_count(@input_file)
     puts "Created '#{@output_file}' containing #{char_count} characters."
   end
 end
