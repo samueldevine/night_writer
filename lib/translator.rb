@@ -14,8 +14,7 @@ class Translator
               :cells
 
   def initialize(path)
-    @dots   ||= generate_dots(path)
-    @cells  ||= generate_cells
+    @path = path
   end
 
   def generate_dots(path)
@@ -24,29 +23,31 @@ class Translator
     end
   end
 
-  def generate_cells
-    @cells = {}
-    ('a'..'z').each do |letter|
-      @cells[letter] = find_cell_by_alpha_char(letter)
-    end
-    @cells[' '] = find_cell_by_alpha_char(' ')
-    @cells
-  end
-
   def find_cell_by_alpha_char(char)
-    @dots.map do |dot|
+    dots ||= generate_dots(@path)
+
+    dots.map do |dot|
       dot.data[char]
     end
+  end
+
+  def generate_cells
+    cells = {}
+
+    ('a'..'z').each do |letter|
+      cells[letter] = find_cell_by_alpha_char(letter)
+    end
+
+    cells[' '] = find_cell_by_alpha_char(' ')
+    cells
   end
 
   def get_braille_chars(string)
     chars = string.chars
 
     chars.map do |char|
-      @dots.map do |dot|
-        dot.data[char]
-      end
-    end # => ['0', '.', '.', '.', '.', '.']
+      find_cell_by_alpha_char(char)
+    end # => [['0', '.', '.', '.', '.', '.'], [...], ...]
   end
 
   def get_alpha_chars(string)
@@ -70,8 +71,9 @@ class Translator
       3.times { char_lines.shift }
     end
 
+    cells ||= generate_cells
     chars.values.map do |dots|
-      @cells.key(dots)
+      cells.key(dots) # can use a local var and call generate_cells here
     end
   end
 

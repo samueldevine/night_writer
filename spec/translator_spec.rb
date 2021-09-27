@@ -12,11 +12,13 @@ RSpec.describe Translator do
     end
 
     it 'generates a dictionary' do
-      expect(@translator.dots).to be_an Array
-      expect(@translator.dots.first).to be_a Dot
-      expect(@translator.cells).to be_a Hash
-      expect(@translator.cells['a']).to be_an Array
-      expect(@translator.cells['a']).to eq ['0', '.', '.', '.', '.', '.',]
+      path = './data/dictionary.csv'
+
+      expect(@translator.generate_dots(path)).to be_an Array
+      expect(@translator.generate_dots(path).first).to be_a Dot
+      expect(@translator.generate_cells).to be_a Hash
+      expect(@translator.generate_cells['a']).to be_an Array
+      expect(@translator.generate_cells['a']).to eq ['0', '.', '.', '.', '.', '.',]
     end
   end
 
