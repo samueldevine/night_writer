@@ -39,12 +39,6 @@ class Translator
     end
   end
 
-  def find_alpha_char_by_cell(cell)
-    @dots.map do |dot|
-      dot.data[char]
-    end
-  end
-
   def get_braille_chars(string)
     chars = string.chars
 
@@ -80,7 +74,6 @@ class Translator
       @cells.key(dots)
     end
   end
-
 
   def translate_to_braille(string)
     chars = get_braille_chars(string)

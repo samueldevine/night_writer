@@ -10,7 +10,8 @@ class FileWriter
   def alpha_character_count(file)
     file.sum do |line|
       line.chars.count
-    end
+    end - 1
+    # don't count final "\n" character
   end
 
   def braille_lines
