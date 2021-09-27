@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# The Dot class takes a csv filepath as an argument and creates a @data hash
+# with letters as keys and braille characters as values. To add new chars, they
+# must be added to the csv as well as this initialize method.
+
 class Dot
   attr_reader :data
 

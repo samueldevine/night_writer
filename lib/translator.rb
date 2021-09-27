@@ -47,7 +47,7 @@ class Translator
 
     chars.map do |char|
       find_cell_by_alpha_char(char)
-    end # => [['0', '.', '.', '.', '.', '.'], [...], ...]
+    end
   end
 
   def get_alpha_chars(string)
@@ -73,7 +73,7 @@ class Translator
 
     cells ||= generate_cells
     chars.values.map do |dots|
-      cells.key(dots) # can use a local var and call generate_cells here
+      cells.key(dots)
     end
   end
 
@@ -82,7 +82,7 @@ class Translator
     lines = []
 
     until chars.length <= 0
-      output_array = chars[0..39] # => [array of [arrays for each char]]
+      output_array = chars[0..39]
 
       line1 = output_array.map do |char|
         "#{char[0]}" + "#{char[3]}"
