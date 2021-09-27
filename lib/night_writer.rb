@@ -4,7 +4,6 @@
 # files to braile, using 0 to represent empty spaces and . to represent raised
 # dots in each block.
 
-require './lib/translator'
 require './lib/file_writer'
 
 file_writer = FileWriter.new(ARGV[0], ARGV[1])
