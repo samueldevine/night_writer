@@ -46,7 +46,14 @@ class Translator
     chars = string.chars
 
     chars.map do |char|
-      find_cell_by_alpha_char(char)
+      cell = find_cell_by_alpha_char(char.downcase)
+
+      if char.ord.between?(65, 90)
+        flag = ['.', '.', '.', '.', '.', '0']
+        [flag, cell]
+      else
+        cell
+      end
     end
   end
 
@@ -72,9 +79,19 @@ class Translator
     end
 
     cells ||= generate_cells
+    caps = false
+
     chars.values.map do |dots|
-      cells.key(dots)
-    end
+      if dots == ['.', '.', '.', '.', '.', '0']
+        caps = true
+        next
+      elsif caps == true
+        caps = false
+        cells.key(dots).upcase
+      else
+        cells.key(dots)
+      end
+    end.compact
   end
 
   def translate_to_braille(string)
@@ -85,15 +102,27 @@ class Translator
       output_array = chars[0..39]
 
       line1 = output_array.map do |char|
-        "#{char[0]}" + "#{char[3]}"
+        if char[0].class == Array
+          "#{char[0][0]}" + "#{char[0][3]}" + "#{char[1][0]}" + "#{char[1][3]}"
+        else
+          "#{char[0]}" + "#{char[3]}"
+        end
       end.join('')
 
       line2 = output_array.map do |char|
-        "#{char[1]}" + "#{char[4]}"
+        if char[0].class == Array
+          "#{char[0][1]}" + "#{char[0][4]}" + "#{char[1][1]}" + "#{char[1][4]}"
+        else
+          "#{char[1]}" + "#{char[4]}"
+        end
       end.join('')
 
       line3 = output_array.map do |char|
-        "#{char[2]}" + "#{char[5]}"
+        if char[0].class == Array
+          "#{char[0][2]}" + "#{char[0][5]}" + "#{char[1][2]}" + "#{char[1][5]}"
+        else
+          "#{char[2]}" + "#{char[5]}"
+        end
       end.join('')
 
       lines << line1

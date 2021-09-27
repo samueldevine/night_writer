@@ -23,23 +23,27 @@ RSpec.describe Translator do
   end
 
   context 'alpha to braille methods' do
-      it '#get_braille_chars' do
-      string = 'a'
-      expected = @translator.get_braille_chars(string)
+    it '#get_braille_chars' do
+      string1 = 'a'
+      string2 = 'AB'
+      expected1 = @translator.get_braille_chars(string1)
+      expected2 = @translator.get_braille_chars(string2)
 
-      expect(expected).to be_an Array
-      expect(expected[0]).to be_an Array
-      expect(expected[0]).to eq ['0', '.', '.', '.', '.', '.',]
+      expect(expected1).to be_an Array
+      expect(expected1[0]).to be_an Array
+      expect(expected1[0]).to eq ['0', '.', '.', '.', '.', '.']
+      expect(expected2[0][0]).to eq ['.', '.', '.', '.', '.', '0']
+      expect(expected2[0][1]).to eq ['0', '.', '.', '.', '.', '.']
     end
 
     it '#get_alpha_chars' do
-      string1 = "0.\n..\n.."
+      string1 = "..0.\n....\n.0.."
       string2 = "0.0.\n..0.\n...."
       expected1 = @translator.get_alpha_chars(string1)
       expected2 = @translator.get_alpha_chars(string2)
 
       expect(expected1).to be_an Array
-      expect(expected1).to eq ['a']
+      expect(expected1).to eq ['A']
       expect(expected2).to eq ['a','b']
     end
 
