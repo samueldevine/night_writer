@@ -1,14 +1,14 @@
 require 'rspec'
-require './lib/translator'
+require './lib/alpha_translator'
 
-RSpec.describe Translator do
+RSpec.describe AlphaTranslator do
   before :each do
-    @translator = Translator.new('./data/dictionary.csv')
+    @translator = AlphaTranslator.new('./data/dictionary.csv')
   end
 
   context '#initialize' do
     it 'exists' do
-      expect(@translator).to be_a Translator
+      expect(@translator).to be_an AlphaTranslator
     end
 
     it 'generates a dictionary' do
@@ -36,17 +36,6 @@ RSpec.describe Translator do
       expect(expected2[0][1]).to eq ['0', '.', '.', '.', '.', '.']
     end
 
-    it '#get_alpha_chars' do
-      string1 = "..0.\n....\n.0.."
-      string2 = "0.0.\n..0.\n...."
-      expected1 = @translator.get_alpha_chars(string1)
-      expected2 = @translator.get_alpha_chars(string2)
-
-      expect(expected1).to be_an Array
-      expect(expected1).to eq ['A']
-      expect(expected2).to eq ['a','b']
-    end
-
     it '#translate_to_braille outputs an array of braille strings' do
       braille_a = @translator.translate_to_braille('a')
 
@@ -63,26 +52,6 @@ RSpec.describe Translator do
       expect(braille_abc[0][0]).to eq '0'
       expect(braille_abc[1][0]).to eq '.'
       expect(braille_abc[2][0]).to eq '.'
-    end
-  end
-
-  context 'braille to alpha methods' do
-    it '#find_cell_by_alpha_char returns a braille cell array' do
-      expected = @translator.find_cell_by_alpha_char('a')
-
-      expect(expected).to be_an Array
-      expect(expected).to eq ['0', '.', '.', '.', '.', '.',]
-    end
-
-    it '#translate_to_alpha outputs alphanumeric characters' do
-      string1 = "0.\n..\n.."
-      string2 = "0.0.00\n..0...\n......"
-      expected1 = @translator.translate_to_alpha(string1)
-      expected2 = @translator.translate_to_alpha(string2)
-
-      expect(expected1).to be_an Array
-      expect(expected1[0]).to eq 'a'
-      expect(expected2[0]).to eq 'abc'
     end
   end
 end

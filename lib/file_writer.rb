@@ -6,16 +6,20 @@
 # intended output_file. It also counts the number of characters to provide a
 # confirmation message after it's done.
 
+require './lib/alpha_translator'
+require './lib/braille_translator'
+
 class FileWriter
 
   def initialize(input_file, output_file)
     @input_file   = File.open(input_file, "r")
     @input_string = File.read(input_file)
-    @translator   = Translator.new('./data/dictionary.csv')
+    @translator_a = AlphaTranslator.new('./data/dictionary.csv')
+    @translator_b = BrailleTranslator.new('./data/dictionary.csv')
     @output_file  = output_file
   end
 
-  def alpha_character_count(file)
+  def character_count(file)
     file.sum do |line|
       line.chars.count
     end - 1
@@ -23,7 +27,7 @@ class FileWriter
   end
 
   def braille_lines
-    @translator.translate_to_braille(@input_string)
+    @translator_a.translate_to_braille(@input_string)
   end
 
   def write_braille_file
@@ -34,18 +38,12 @@ class FileWriter
       File.open(@output_file, "a") { |file| file.puts "#{braille_lines[i]}" }
     end
 
-    char_count = alpha_character_count(@input_file)
+    char_count = character_count(@input_file)
     puts "Created '#{@output_file}' containing #{char_count} characters."
   end
 
-  def braille_character_count(file)
-    file.sum do |line|
-      ((line.chars.count - 1.0) / 6)
-    end.to_i
-  end
-
   def alpha_lines
-    @translator.translate_to_alpha(@input_string)
+    @translator_b.translate_to_alpha(@input_string)
   end
 
   def write_alpha_file
@@ -55,7 +53,7 @@ class FileWriter
       File.open(@output_file, "a") { |file| file.puts "#{alpha_lines[i]}" }
     end
 
-    char_count = braille_character_count(@input_file)
+    char_count = character_count(File.open(@output_file, "r"))
     puts "Created '#{@output_file}' containing #{char_count} characters."
   end
 end

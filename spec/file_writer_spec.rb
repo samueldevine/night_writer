@@ -1,6 +1,5 @@
 require 'rspec'
 require './lib/file_writer'
-require './lib/translator'
 
 RSpec.describe FileWriter do
   context '#initialize' do
@@ -18,9 +17,9 @@ RSpec.describe FileWriter do
       @file_writer = FileWriter.new('test.txt', 'spec_output.txt')
     end
 
-    it '#alpha_character_count' do
+    it '#character_count' do
       file = File.open('test.txt', "r")
-      expected = @file_writer.alpha_character_count(file)
+      expected = @file_writer.character_count(file)
 
       expect(expected).to be_an Integer
       expect(expected).to eq 7
@@ -43,14 +42,6 @@ RSpec.describe FileWriter do
   context 'braille to alpha methods' do
     before :each do
       @file_writer = FileWriter.new('spec_output.txt', 'test2.txt')
-    end
-
-    it '#braille_character_count' do
-      file = File.open('spec_output.txt', "r")
-      expected = @file_writer.braille_character_count(file)
-
-      expect(expected).to be_an Integer
-      expect(expected).to eq 7
     end
 
     it '#alpha_lines' do
