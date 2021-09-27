@@ -1,3 +1,11 @@
+# frozen_string_literal: true
+
+# The FileWriter class takes inputs: a file to be translated and a filepath for
+# the translation to be written to. The class is responsible for passing the
+# input file to Translator, getting a translation back, and writing it to the
+# intended output_file. It also counts the number of characters to provide a
+# confirmation message after it's done.
+
 class FileWriter
 
   def initialize(input_file, output_file)

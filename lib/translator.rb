@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # The Translator class creates a dictionary using the included .csv file and
-# uses it to translate messages into braille
+# uses it to translate messages to and from braille
 
 require 'csv'
 require './lib/readable_csv'
