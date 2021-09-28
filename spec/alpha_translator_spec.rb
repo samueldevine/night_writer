@@ -53,5 +53,15 @@ RSpec.describe AlphaTranslator do
       expect(braille_abc[1][0]).to eq '.'
       expect(braille_abc[2][0]).to eq '.'
     end
+
+    it '#translate_to_braille can handle capital letters' do
+      braille_abc = @translator.translate_to_braille('ABC')
+
+      expect(braille_abc).to be_an Array
+      expect(braille_abc.length).to eq 3
+      expect(braille_abc[0][0]).to eq '.'
+      expect(braille_abc[1][0]).to eq '.'
+      expect(braille_abc[2][0]).to eq '.'
+    end
   end
 end
